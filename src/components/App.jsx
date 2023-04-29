@@ -30,18 +30,19 @@ export class App extends Component {
   };
 
   changeFilter = event => {
-    this.setState({ filter: event.currentTurget.value });
+    this.setState({ filter: event.currentTarget.value });
   };
-  getFilterContacts = () => {
+  getFilteredContacts = () => {
     const { contacts, filter } = this.state;
-    const normalizedFilter = filter.toLocaleLowerCase();
+    const normalizedFilter = filter.toLowerCase();
     return contacts.filter(contact =>
-      contact.name.toLocaleLowerCase().includes(normalizedFilter)
+      contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
 
   render() {
     const { filter } = this.state;
+    const filteredContacts = this.getFilteredContacts();
 
     return (
       <>
@@ -50,8 +51,9 @@ export class App extends Component {
           <ContactForm onSubmit={this.formSubmitHendler}></ContactForm>
           <h2>Contacts</h2>
           <Filter value={filter} onChange={this.changeFilter} />
+
           <ContactList
-            contacts={this.getFilterContacts}
+            contacts={filteredContacts}
             onDeleteContact={this.deleteContact}
           />
         </div>

@@ -3,32 +3,25 @@ import { nanoid } from 'nanoid';
 
 class ContactForm extends Component {
   state = {
-    id: '',
     name: '',
     number: '',
   };
 
   handleChange = event => {
     const { name, value } = event.currentTarget;
-    this.addComponentId();
+
     this.setState({ [name]: value });
   };
 
   handleSubmit = event => {
     event.preventDefault();
 
-    this.props.onSubmit(this.state);
+    this.props.onSubmit({ ...this.state, id: nanoid() });
     this.reset();
   };
 
   reset = () => {
-    this.setState({ id: '', name: '', number: '' });
-  };
-
-  addComponentId = () => {
-    if (!this.state.id) {
-      this.setState({ id: nanoid() });
-    }
+    this.setState({ name: '', number: '' });
   };
 
   render() {
